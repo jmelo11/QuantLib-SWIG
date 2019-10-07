@@ -145,7 +145,7 @@
 %rename(Divide)        __div__;
 #endif
 
-
+%include loans.i
 %include common.i
 %include vectors.i
 %include basketoptions.i
