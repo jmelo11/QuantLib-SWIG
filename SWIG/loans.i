@@ -38,6 +38,7 @@
 
 %{
 using QuantLib::Loan;
+using QuantLib::UnEqualAmortizationLoan;
 using QuantLib::EqualAmortizationLoan;
 using QuantLib::EqualCashFlowLoan;
 %}
@@ -56,35 +57,99 @@ class Loan : public Bond {
             const Date& issueDate = Date(),
             const Leg& coupons = Leg());
 };
+%shared_ptr(EqualAmortizationLoan)
+class EqualAmortizationLoan : public Loan {
+  public:
+    UnEqualAmortizationLoan(Natural settlementDays,
+                                std::vector<Real> amortizations,
+                                const Schedule& schedule,
+                                const Real coupon,
+                                const DayCounter& dayCounter,
+								Compounding comp = Compounded,
+								Frequency freq = Annual,
+                                BusinessDayConvention paymentConvention = Following,
+                                const Date& issueDate = Date(),
+                                const Calendar& paymentCalendar = Calendar(),
+                                const Period& exCouponPeriod = Period(),
+                                const Calendar& exCouponCalendar = Calendar(),
+                                const BusinessDayConvention exCouponConvention = Unadjusted,
+                                bool exCouponEndOfMonth = false);
+
+        UnEqualAmortizationLoan(Natural settlementDays,
+                                std::vector<Real> amortizations,
+                                const Schedule& schedule,
+                                const InterestRate coupon,
+                                BusinessDayConvention paymentConvention = Following,
+                                const Date& issueDate = Date(),
+                                const Calendar& paymentCalendar = Calendar(),
+                                const Period& exCouponPeriod = Period(),
+                                const Calendar& exCouponCalendar = Calendar(),
+                                const BusinessDayConvention exCouponConvention = Unadjusted,
+                                bool exCouponEndOfMonth = false);
+
+        UnEqualAmortizationLoan(Natural settlementDays,
+                                std::vector<Real> amortizations,
+                                Schedule schedule,
+                                YieldTermStructure& discountCurve,
+                                const DayCounter& dayCounter,
+								Compounding comp = Compounded,
+								Frequency freq = Annual,
+                                BusinessDayConvention paymentConvention = Following,
+                                const Date& issueDate = Date(),
+                                const Calendar& paymentCalendar = Calendar(),
+                                const Period& exCouponPeriod = Period(),
+                                const Calendar& exCouponCalendar = Calendar(),
+                                const BusinessDayConvention exCouponConvention = Unadjusted,
+                                bool exCouponEndOfMonth = false);
+
+        Frequency frequency() const;
+        const DayCounter& dayCounter() const;
+};
 
 %shared_ptr(EqualAmortizationLoan)
 class EqualAmortizationLoan : public Loan {
   public:
     EqualAmortizationLoan(Natural settlementDays,
-                          Real faceAmount,
-                          const Schedule& schedule,
-                          const Real coupon,
-                          const DayCounter& accrualDayCounter,
-                          BusinessDayConvention paymentConvention = Following,
-                          const Date& issueDate = Date(),
-                          const Calendar& paymentCalendar = Calendar(),
-                          const Period& exCouponPeriod = Period(),
-                          const Calendar& exCouponCalendar = Calendar(),
-                          const BusinessDayConvention exCouponConvention = Unadjusted,
-                          bool exCouponEndOfMonth = false);
-    
-    EqualAmortizationLoan(Natural settlementDays,
-                          Real faceAmount,
-                          Schedule schedule,
-                          YieldTermStructure& discountCurve,
-                          const DayCounter& accrualDayCounter,
-                          BusinessDayConvention paymentConvention = Following,
-                          const Date& issueDate = Date(),
-                          const Calendar& paymentCalendar = Calendar(),
-                          const Period& exCouponPeriod = Period(),
-                          const Calendar& exCouponCalendar = Calendar(),
-                          const BusinessDayConvention exCouponConvention = Unadjusted,
-                          bool exCouponEndOfMonth = false);
+                              Real faceAmount,
+                              const Schedule& schedule,
+                              const Real coupon,
+                              const DayCounter& dayCounter,
+                              Compounding comp = Compounded,
+                              Frequency freq = Annual,
+                              BusinessDayConvention paymentConvention = Following,
+                              const Date& issueDate = Date(),
+                              const Calendar& paymentCalendar = Calendar(),
+                              const Period& exCouponPeriod = Period(),
+                              const Calendar& exCouponCalendar = Calendar(),
+                              const BusinessDayConvention exCouponConvention = Unadjusted,
+                              bool exCouponEndOfMonth = false);
+
+        EqualAmortizationLoan(Natural settlementDays,
+                              Real faceAmount,
+                              const Schedule& schedule,
+                              const InterestRate coupon,
+                              BusinessDayConvention paymentConvention = Following,
+                              const Date& issueDate = Date(),
+                              const Calendar& paymentCalendar = Calendar(),
+                              const Period& exCouponPeriod = Period(),
+                              const Calendar& exCouponCalendar = Calendar(),
+                              const BusinessDayConvention exCouponConvention = Unadjusted,
+                              bool exCouponEndOfMonth = false);
+
+        EqualAmortizationLoan(Natural settlementDays,
+                              Real faceAmount,
+                              Schedule schedule,
+                              YieldTermStructure& discountCurve,
+                              const DayCounter& dayCounter,
+							  Compounding comp = Compounded,
+							  Frequency freq = Annual,
+                              BusinessDayConvention paymentConvention = Following,
+                              const Date& issueDate = Date(),
+                              const Calendar& paymentCalendar = Calendar(),
+                              const Period& exCouponPeriod = Period(),
+                              const Calendar& exCouponCalendar = Calendar(),
+                              const BusinessDayConvention exCouponConvention = Unadjusted,
+                              bool exCouponEndOfMonth = false);
 	Frequency frequency() const;
     DayCounter dayCounter() const;
 };
@@ -93,32 +158,46 @@ class EqualAmortizationLoan : public Loan {
 class EqualCashFlowLoan : public Loan {
   public:
     EqualCashFlowLoan(Natural settlementDays,
-                      Real faceAmount,
-                      const Schedule& schedule,
-                      const InterestRate& coupon,
-                      const DayCounter& accrualDayCounter,
-                      BusinessDayConvention paymentConvention = Following,
-                      const Date& issueDate = Date(),
-                      const Calendar& paymentCalendar = Calendar(),
-                      const Period& exCouponPeriod = Period(),
-                      const Calendar& exCouponCalendar = Calendar(),
-                      const BusinessDayConvention exCouponConvention = Unadjusted,
-                      bool exCouponEndOfMonth = false);
-    
-    EqualCashFlowLoan(Natural settlementDays,
-						Real faceAmount,
-						const Schedule& schedule,
-						const YieldTermStructure& discountCurve,
-						const DayCounter& accrualDayCounter,
-						Compounding comp,
-						Frequency freq,
-						BusinessDayConvention paymentConvention = Following,
-						const Date& issueDate = Date(),
-						const Calendar& paymentCalendar = Calendar(),
-						const Period& exCouponPeriod = Period(),
-						const Calendar& exCouponCalendar = Calendar(),
-						const BusinessDayConvention exCouponConvention = Unadjusted,
-						bool exCouponEndOfMonth = false);
+                          Real faceAmount,
+                          const Schedule& schedule,
+                          const Real coupon,
+                          const DayCounter& dayCounter,
+                          Compounding comp = Compounded,
+                          Frequency freq = Annual,
+                          BusinessDayConvention paymentConvention = Following,
+                          const Date& issueDate = Date(),
+                          const Calendar& paymentCalendar = Calendar(),
+                          const Period& exCouponPeriod = Period(),
+                          const Calendar& exCouponCalendar = Calendar(),
+                          const BusinessDayConvention exCouponConvention = Unadjusted,
+                          bool exCouponEndOfMonth = false);
+
+        EqualCashFlowLoan(Natural settlementDays,
+                          Real faceAmount,
+                          const Schedule& schedule,
+                          const InterestRate& coupon,
+                          BusinessDayConvention paymentConvention = Following,
+                          const Date& issueDate = Date(),
+                          const Calendar& paymentCalendar = Calendar(),
+                          const Period& exCouponPeriod = Period(),
+                          const Calendar& exCouponCalendar = Calendar(),
+                          const BusinessDayConvention exCouponConvention = Unadjusted,
+                          bool exCouponEndOfMonth = false);
+
+        EqualCashFlowLoan(Natural settlementDays,
+                          Real faceAmount,
+                          const Schedule& schedule,
+                          const YieldTermStructure& discountCurve,
+                          const DayCounter& accrualDayCounter,
+                          Compounding comp = Compounded,
+                          Frequency freq = Annual,
+                          BusinessDayConvention paymentConvention = Following,
+                          const Date& issueDate = Date(),
+                          const Calendar& paymentCalendar = Calendar(),
+                          const Period& exCouponPeriod = Period(),
+                          const Calendar& exCouponCalendar = Calendar(),
+                          const BusinessDayConvention exCouponConvention = Unadjusted,
+                          bool exCouponEndOfMonth = false);
 	Frequency frequency() const;
     DayCounter dayCounter() const;
 };
