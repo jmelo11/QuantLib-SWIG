@@ -57,23 +57,23 @@ class Loan : public Bond {
             const Date& issueDate = Date(),
             const Leg& coupons = Leg());
 };
-%shared_ptr(EqualAmortizationLoan)
-class EqualAmortizationLoan : public Loan {
+%shared_ptr(UnEqualAmortizationLoan)
+class UnEqualAmortizationLoan : public Loan {
   public:
-    UnEqualAmortizationLoan(Natural settlementDays,
-                                std::vector<Real> amortizations,
-                                const Schedule& schedule,
-                                const Real coupon,
-                                const DayCounter& dayCounter,
-								Compounding comp = Compounded,
-								Frequency freq = Annual,
-                                BusinessDayConvention paymentConvention = Following,
-                                const Date& issueDate = Date(),
-                                const Calendar& paymentCalendar = Calendar(),
-                                const Period& exCouponPeriod = Period(),
-                                const Calendar& exCouponCalendar = Calendar(),
-                                const BusinessDayConvention exCouponConvention = Unadjusted,
-                                bool exCouponEndOfMonth = false);
+		UnEqualAmortizationLoan(Natural settlementDays,
+									std::vector<Real> amortizations,
+									const Schedule& schedule,
+									const Real coupon,
+									const DayCounter& dayCounter,
+									Compounding comp = Compounded,
+									Frequency freq = Annual,
+									BusinessDayConvention paymentConvention = Following,
+									const Date& issueDate = Date(),
+									const Calendar& paymentCalendar = Calendar(),
+									const Period& exCouponPeriod = Period(),
+									const Calendar& exCouponCalendar = Calendar(),
+									const BusinessDayConvention exCouponConvention = Unadjusted,
+									bool exCouponEndOfMonth = false);
 
         UnEqualAmortizationLoan(Natural settlementDays,
                                 std::vector<Real> amortizations,
@@ -109,20 +109,20 @@ class EqualAmortizationLoan : public Loan {
 %shared_ptr(EqualAmortizationLoan)
 class EqualAmortizationLoan : public Loan {
   public:
-    EqualAmortizationLoan(Natural settlementDays,
-                              Real faceAmount,
-                              const Schedule& schedule,
-                              const Real coupon,
-                              const DayCounter& dayCounter,
-                              Compounding comp = Compounded,
-                              Frequency freq = Annual,
-                              BusinessDayConvention paymentConvention = Following,
-                              const Date& issueDate = Date(),
-                              const Calendar& paymentCalendar = Calendar(),
-                              const Period& exCouponPeriod = Period(),
-                              const Calendar& exCouponCalendar = Calendar(),
-                              const BusinessDayConvention exCouponConvention = Unadjusted,
-                              bool exCouponEndOfMonth = false);
+		EqualAmortizationLoan(Natural settlementDays,
+								  Real faceAmount,
+								  const Schedule& schedule,
+								  const Real coupon,
+								  const DayCounter& dayCounter,
+								  Compounding comp = Compounded,
+								  Frequency freq = Annual,
+								  BusinessDayConvention paymentConvention = Following,
+								  const Date& issueDate = Date(),
+								  const Calendar& paymentCalendar = Calendar(),
+								  const Period& exCouponPeriod = Period(),
+								  const Calendar& exCouponCalendar = Calendar(),
+								  const BusinessDayConvention exCouponConvention = Unadjusted,
+								  bool exCouponEndOfMonth = false);
 
         EqualAmortizationLoan(Natural settlementDays,
                               Real faceAmount,
